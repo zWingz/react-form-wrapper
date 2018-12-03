@@ -1,0 +1,8 @@
+{
+  "name": "react-form-wrapper",
+  "version": "1.0.0",
+  "description": "A react form component HOC",
+  "main": "index.js",
+  "author": "zhengzwing@gmail.com",
+  "license": "MIT"
+}
