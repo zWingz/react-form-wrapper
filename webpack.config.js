@@ -1,0 +1,45 @@
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
+
+module.exports = {
+  // require 解析
+  mode: 'development',
+  entry: {
+    index: './develop/index.tsx'
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.scss', '.js'], // 当require找不到模块添加后缀
+    modules: [path.join(__dirname, '../src'), 'node_modules']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              cacheDirectory: true
+            }
+          },
+          {
+            loader: 'ts-loader'
+          }
+        ],
+        include: path.resolve(__dirname, '../'),
+        exclude: /node_modules/
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './develop/index.html',
+      filename: 'index.html',
+      inject: true,
+      chunks: ['index']
+    }),
+    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin()
+  ]
+}
