@@ -10,6 +10,18 @@ interface WrappedItemProp {
   }
 }
 
+function typeOf(arg, type) {
+  return typeof arg === type
+}
+
+function getValue(val: any, element: JSX.Element) {
+  const { type } = element
+  if(!(typeOf(val, 'undefined') && typeOf(type, 'string'))) {
+    return val
+  }
+  return ['input', 'textarea'].includes(type as string) ? '' : val
+}
+
 export default React.memo<WrappedItemProp>(function WrappedItem(
   p: WrappedItemProp
 ) {
@@ -20,7 +32,7 @@ export default React.memo<WrappedItemProp>(function WrappedItem(
     props.originOnChange = element.props[eventTrigger]
   }
   const valueProp = {
-    [valuePropName]: val
+    [valuePropName]: getValue(val, element)
   }
   const changeProp = {
     [eventTrigger]: e => {
@@ -29,7 +41,6 @@ export default React.memo<WrappedItemProp>(function WrappedItem(
       if (getValueFromEvent) {
         value = getValueFromEvent(e)
       } else if (e && e.target) {
-        console.log(e.target.value)
         value = e.target[props.valuePropName || 'value']
       } else {
         value = e
@@ -38,9 +49,7 @@ export default React.memo<WrappedItemProp>(function WrappedItem(
       if (props.originOnChange) {
         props.originOnChange(e)
       }
-      // this.forceUpdate()
     }
   }
-  console.log(valueProp)
   return <element.type {...element.props} {...valueProp} {...changeProp} />
 })

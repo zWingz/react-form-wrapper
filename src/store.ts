@@ -10,7 +10,7 @@ export default class Store<T extends PlainObject = PlainObject> {
   private selfState: T
   private hadSetDefaultValue: string[] = []
   private events = {}
-  private shouldSetDefault = (key, value, defaultValue) => {
+  private shouldSetDefault = (key, value, defaultValue?) => {
     return (
       isUndefined(value) &&
       !isUndefined(defaultValue) &&
@@ -66,7 +66,7 @@ export default class Store<T extends PlainObject = PlainObject> {
     }
   }
 
-  public get(path: string, defaultValue) {
+  public get(path: string, defaultValue?) {
     const { hadSetDefaultValue, shouldSetDefault } = this
     let val
     if (path.includes('.')) {

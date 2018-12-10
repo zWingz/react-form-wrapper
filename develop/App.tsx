@@ -7,7 +7,7 @@ declare const module: any
 class Input extends React.PureComponent<any> {
   render() {
     const { value, onChange } = this.props
-    return <input type='text' value={value || ''} onChange={onChange}/>
+    return <input type='text' value={value} onChange={onChange}/>
   }
 }
 
@@ -16,11 +16,10 @@ class Test extends React.PureComponent<FormWrapperHocProp, any, any> {
     const { formWrapper } = this.props
     const { itemWrapper } = formWrapper
     const Input1 = itemWrapper('test', {
-      valuePropName: 'checked'
-    })(<input type='checkbox' name='test' value='radio1'/>)
-    const Input2 = itemWrapper('test2', {
-      defaultValue: undefined
-    })(<Input />)
+    })(<input type='text' name='test'/>)
+    // const Input2 = itemWrapper('test2', {
+    //   defaultValue: undefined
+    // })(<Input />)
     const state = formWrapper.getState()
     return (
       <div>
@@ -28,10 +27,10 @@ class Test extends React.PureComponent<FormWrapperHocProp, any, any> {
           {Input1}
           {state.test}
         </div>
-        <div>
+        {/* <div>
           {Input2}
           {state.test2}
-        </div>
+        </div> */}
       </div>
     )
   }

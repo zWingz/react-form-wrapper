@@ -1,9 +1,6 @@
 import * as React from 'react'
 import Store from './store'
-import WrappedpedItem from './Item'
-function isUndefined(obj) {
-  return typeof obj === 'undefined'
-}
+import WrappedpedItem from './WrappedItem'
 type PlainObject = {
   [key: string]: any
 }
@@ -51,19 +48,11 @@ export default function FormWrapperHoc<P = any, T extends PlainObject = PlainObj
       })
     }
 
-    setFields = (fields: object, needUpdate = false, callback?) => {
-      // this.field = Object.assign({}, this.field, fields)
-      this.store.replace(fields)
-      needUpdate && this.forceUpdate(callback)
-    }
-
-    setWrapperState = (state: object) => {
-      this.setFields(
-        {
-          ...state
-        },
-        true
-      )
+    setWrapperState = (state: PlainObject, callback?) => {
+      this.store.replace({
+        ...state
+      })
+      this.forceUpdate(callback)
     }
 
     itemWrapper: FormItemWrapper = (key, opt = {}) => element => {
