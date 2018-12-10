@@ -9,7 +9,6 @@ function isUndefined(obj) {
 export default class Store<T extends PlainObject = PlainObject> {
   private selfState: T
   private hadSetDefaultValue: string[] = []
-  private events = {}
   private shouldSetDefault = (key, value, defaultValue?) => {
     return (
       isUndefined(value) &&
@@ -17,30 +16,30 @@ export default class Store<T extends PlainObject = PlainObject> {
       !this.hadSetDefaultValue.includes(key)
     )
   }
-  private emit(event, val?) {
-    const listeners = this.events[event]
-    if(listeners) {
-      listeners.forEach(each => {
-        each(val)
-      })
-    }
-  }
+  // private emit(event, val?) {
+  //   const listeners = this.events[event]
+  //   if(listeners) {
+  //     listeners.forEach(each => {
+  //       each(val)
+  //     })
+  //   }
+  // }
   constructor(defaultState: T = {} as T) {
-    this.selfState = defaultState
+    this.selfState = Object.assign({}, defaultState)
   }
   getState = () => {
     return {
       ...(this.selfState as object)
     }
   }
-  public on(event, cb) {
-    const listeners = this.events[event]
-    if(listeners) {
-      listeners.push(cb)
-    } else {
-      this.events[event] = [cb]
-    }
-  }
+  // public on(event, cb) {
+  //   const listeners = this.events[event]
+  //   if(listeners) {
+  //     listeners.push(cb)
+  //   } else {
+  //     this.events[event] = [cb]
+  //   }
+  // }
   public replace(state) {
     this.selfState = {
       ...(this.selfState as {}),
@@ -52,7 +51,7 @@ export default class Store<T extends PlainObject = PlainObject> {
       const keyPath = path.split('.')
       let tmp = this.selfState
       keyPath.forEach((each, index) => {
-        if (index === path.length - 1) {
+        if (index === keyPath.length - 1) {
           tmp[each] = value
         } else {
           if (typeof tmp[each] === 'undefined') {
@@ -71,10 +70,12 @@ export default class Store<T extends PlainObject = PlainObject> {
     let val
     if (path.includes('.')) {
       const keyPath = path.split('.')
+      const { length } = keyPath
       let field = this.selfState
       let tmp = field
-      keyPath.forEach((each, index) => {
-        if (index === path.length - 1) {
+      for(let i = 0; i < length; i ++) {
+        const each = keyPath[i]
+        if (i === length - 1) {
           if (shouldSetDefault(path, tmp[each], defaultValue)) {
             tmp[each] = defaultValue
             hadSetDefaultValue.push(path)
@@ -82,11 +83,14 @@ export default class Store<T extends PlainObject = PlainObject> {
           val = tmp[each]
         } else {
           if (typeof tmp[each] === 'undefined') {
+            if(isUndefined(defaultValue)) {
+              return undefined
+            }
             tmp[each] = {}
           }
           tmp = tmp[each]
         }
-      })
+      }
     } else {
       if (shouldSetDefault(path, this.selfState[path], defaultValue)) {
         hadSetDefaultValue.push(path)
