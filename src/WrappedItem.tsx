@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FormItemWrapperOpt } from '.'
-interface WrappedItemProp {
+export interface WrappedItemProp {
   element: JSX.Element
   stateKey: string
   val: any
@@ -22,34 +22,35 @@ function getValue(val: any, element: JSX.Element) {
   return ['input', 'textarea'].includes(type as string) ? '' : val
 }
 
-export default React.memo<WrappedItemProp>(function WrappedItem(
-  p: WrappedItemProp
-) {
-  const { element, stateKey, wrapperProp, val, onChange } = p
-  const props = Object.assign({}, wrapperProp)
-  const { valuePropName = 'value', eventTrigger = 'onChange' } = props
-  if (element.props[eventTrigger]) {
-    props.originOnChange = element.props[eventTrigger]
-  }
-  const valueProp = {
-    [valuePropName]: getValue(val, element)
-  }
-  const changeProp = {
-    [eventTrigger]: e => {
-      const { getValueFromEvent } = props
-      let value = ''
-      if (getValueFromEvent) {
-        value = getValueFromEvent(e)
-      } else if (e && e.target) {
-        value = e.target[props.valuePropName || 'value']
-      } else {
-        value = e
-      }
-      onChange(stateKey, value)
-      if (props.originOnChange) {
-        props.originOnChange(e)
+export default class WrappedItem extends React.PureComponent<WrappedItemProp> {
+  render() {
+    const { element, stateKey, wrapperProp = {}, val, onChange } = this.props
+    const wrappedOpt = Object.assign({}, wrapperProp)
+    const { valuePropName = 'value', eventTrigger = 'onChange' } = wrappedOpt
+    if (element.props[eventTrigger]) {
+      wrappedOpt.originOnChange = element.props[eventTrigger]
+    }
+    const valueProp = {
+      [valuePropName]: getValue(val, element)
+    }
+    const changeProp = {
+      [eventTrigger]: e => {
+        const { getValueFromEvent } = wrappedOpt
+        let value = ''
+        if (getValueFromEvent) {
+          value = getValueFromEvent(e)
+        } else if (e && e.target) {
+          value = e.target[wrappedOpt.valuePropName || 'value']
+        } else {
+          value = e
+        }
+        onChange(stateKey, value)
+        if (wrappedOpt.originOnChange) {
+          wrappedOpt.originOnChange(e)
+        }
       }
     }
+    return <element.type {...element.props} {...valueProp} {...changeProp} />
+
   }
-  return <element.type {...element.props} {...valueProp} {...changeProp} />
-})
+}

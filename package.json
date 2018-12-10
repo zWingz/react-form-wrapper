@@ -14,7 +14,9 @@
     "pub": "yarn tslint && yarn build && yarn publish --registry http://registry.npmjs.org --access=public",
     "test": "jest"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/enzyme": "^3.1.15"
+  },
   "devDependencies": {
     "@babel/core": "^7.1.6",
     "@types/jest": "^23.3.10",

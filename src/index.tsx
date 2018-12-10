@@ -41,12 +41,6 @@ export default function FormWrapperHoc<P = any, T extends PlainObject = PlainObj
   return class FormWrapped extends React.PureComponent<PropWithRef<P>, any> {
 
     store = new Store<T>(initialState)
-    constructor(p) {
-      super(p)
-      this.store.on('changeDefault', () => {
-        this.forceUpdate()
-      })
-    }
 
     setWrapperState = (state: PlainObject, callback?) => {
       this.store.replace({
