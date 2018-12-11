@@ -26,8 +26,9 @@ export default class Store<T extends PlainObject = PlainObject> {
   // }
   constructor(defaultState: T = {} as T) {
     this.selfState = Object.assign({}, defaultState)
+    this.getState = this.getState.bind(this)
   }
-  getState = () => {
+  getState() {
     return {
       ...(this.selfState as object)
     }

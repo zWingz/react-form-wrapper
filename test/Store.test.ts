@@ -1,4 +1,4 @@
-import Store from '../store'
+import Store from '../src/store'
 
 describe('test init a empty store', () => {
   it('initState is {}', () => {

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { shallow, mount } from 'enzyme'
-import FormWrapper, { FormWrapperHocProp } from '..'
+import { mount } from 'enzyme'
+import FormWrapper, { FormWrapperHocProp } from '../src'
 
 describe('test form wrapper', () => {
   const originOnChange = jest.fn()

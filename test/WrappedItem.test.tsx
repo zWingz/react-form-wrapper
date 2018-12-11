@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { shallow, mount } from 'enzyme'
-import WrappedItem, { WrappedItemProp } from '../WrappedItem'
+import WrappedItem, { WrappedItemProp } from '../src/WrappedItem'
 
 function getCom(element: JSX.Element, opt: Partial<WrappedItemProp>) {
   return <WrappedItem element={element} {...opt as WrappedItemProp} />

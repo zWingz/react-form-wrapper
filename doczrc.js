@@ -1,5 +1,5 @@
 export default {
-  base: '/react-form/',
+  base: '/react-form-wrapper/',
   title: 'React FormWrapper Component',
   description: 'A React Component',
   dest: 'website',

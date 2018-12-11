@@ -2,9 +2,24 @@
   "name": "react-form-wrapper",
   "version": "1.0.0",
   "description": "A react form component HOC",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "./index.d.ts",
   "author": "zhengzwing@gmail.com",
   "license": "MIT",
+  "files": [
+    "dist",
+    "src",
+    "index.d.ts"
+  ],
+  "homepage": "https://zwing.site/react-form-wrapper/#/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zWingz/react-form-wrapper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zWingz/react-form-wrapper/issues"
+  },
   "scripts": {
     "docz": "docz dev",
     "docz:build": "docz build",
@@ -12,18 +27,20 @@
     "tslint": "tslint --fix --format codeFrame --project .",
     "dev": "webpack-serve --host 0.0.0.0 --port 2222",
     "pub": "yarn tslint && yarn build && yarn publish --registry http://registry.npmjs.org --access=public",
-    "test": "jest"
+    "test": "npm run tslint && jest"
   },
-  "dependencies": {
-    "@types/enzyme": "^3.1.15"
+  "peerDependencies": {
+    "react": ">=16.0.0"
   },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.1.6",
+    "@types/enzyme": "^3.1.15",
     "@types/jest": "^23.3.10",
     "@types/react": "^16.7.11",
     "babel-loader": "^8.0.4",
     "cz-conventional-changelog": "^2.1.0",
-    "docz": "0.12.13",
+    "docz": "0.12.15",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "enzyme-to-json": "^3.3.5",
@@ -32,6 +49,11 @@
     "jest": "^23.6.0",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
+    "rollup": "^0.67.4",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-typescript": "^1.0.0",
     "shallowequal": "^1.1.0",
     "ts-jest": "^23.10.5",
     "ts-loader": "^5.3.1",
@@ -56,8 +78,7 @@
     ],
     "setupTestFrameworkScriptFile": "<rootDir>/test/setup.ts",
     "collectCoverageFrom": [
-      "src/**/*.{ts,tsx}",
-      "!src/**/__test__/**"
+      "src/**/*.{ts,tsx}"
     ],
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
@@ -65,7 +86,7 @@
       "^.+\\.(ts|tsx)$": "ts-jest"
     },
     "testMatch": [
-      "**/__test__/*.test.(ts|tsx)"
+      "<rootDir>/test/*.test.(ts|tsx)"
     ],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"

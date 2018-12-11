@@ -10,10 +10,11 @@
     "module" : "esNext",
     "moduleResolution": "node",
     "types": ["react", "jest"],
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "tsc"
     // "experimentalDecorators": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.test.ts"]
 }
