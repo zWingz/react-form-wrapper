@@ -1,12 +1,17 @@
 # React-form-wrapper
 [![CircleCI](https://circleci.com/gh/zWingz/react-form-wrapper/tree/master.svg?style=svg)](https://circleci.com/gh/zWingz/react-form-wrapper/tree/master)  [![codecov](https://codecov.io/gh/zWingz/react-form-wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/zWingz/react-form-wrapper)
 
-[DEMO](http://zwing.site/react-form-wrapper/#/)
 [![Edit react-form-wrapper demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/53z1rm56zl?autoresize=1)
+
+## Document
+[Document](http://zwing.site/react-form-wrapper/#/)
 
 ## Base Usage
 
+`npm install @zzwing/react-form-wrapper`
+
 ```typescript
+import FormWrapperHoc from '@zzwing/react-form-wrapper'
 FormWrapperHoc(WrappedComponent, defaultState)
 ```
 
