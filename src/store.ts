@@ -16,14 +16,6 @@ export default class Store<T extends PlainObject = PlainObject> {
       !this.hadSetDefaultValue.includes(key)
     )
   }
-  // private emit(event, val?) {
-  //   const listeners = this.events[event]
-  //   if(listeners) {
-  //     listeners.forEach(each => {
-  //       each(val)
-  //     })
-  //   }
-  // }
   constructor(defaultState: T = {} as T) {
     this.selfState = Object.assign({}, defaultState)
     this.getState = this.getState.bind(this)
@@ -33,14 +25,6 @@ export default class Store<T extends PlainObject = PlainObject> {
       ...(this.selfState as object)
     }
   }
-  // public on(event, cb) {
-  //   const listeners = this.events[event]
-  //   if(listeners) {
-  //     listeners.push(cb)
-  //   } else {
-  //     this.events[event] = [cb]
-  //   }
-  // }
   public replace(state) {
     this.selfState = {
       ...(this.selfState as {}),

@@ -139,6 +139,56 @@ class Form extends React.PureComponent<FormWrapperHocProp> {
   }
 </Playground>
 
+### with eventTrigger
+
+<Playground>
+  {
+    () => {
+      class CustomForm extends React.PureComponent {
+        constructor() {
+          this.onClick = this.onClick.bind(this)
+        }
+        onClick() {
+          this.props.customTrigger(new Date())
+        }
+        render() {
+          const { value } = this.props
+          return <div>
+            { value ? value.toUTCString() : '' }
+            <button onClick={this.onClick}>change date</button>
+          </div>
+        }
+      }
+
+      class Test extends React.PureComponent {
+        render() {
+          const { itemWrapper, getState } = this.props.formWrapper
+          const DateValue = itemWrapper('date', {
+            eventTrigger: 'customTrigger'
+          })(<CustomForm />)
+          const { date } = getState()
+          return <div>
+            <label>
+              CustomForm:
+              {
+                DateValue
+              }
+            </label>
+            <div>
+              Value: { date ? date.toUTCString() : '' }
+            </div>
+          </div>
+        }
+      }
+
+      const Wrapped = FormWrapperHoc(Test)
+      return <Wrapped />
+    }
+  }
+
+</Playground>
+
+
 ## Types
 
 ```typescript
