@@ -1,6 +1,6 @@
 {
   "name": "@zzwing/react-form-wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A react form component HOC",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -70,7 +70,9 @@
       "tsx",
       "js"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/test/setup.ts"],
+    "setupFilesAfterEnv": [
+      "<rootDir>/test/setup.ts"
+    ],
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}"
     ],
