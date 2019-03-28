@@ -26,8 +26,8 @@
     "build": "rollup -c",
     "tslint": "tslint --fix --format codeFrame --project .",
     "dev": "poi --serve",
-    "pub": "yarn test && yarn build && yarn publish --access=public",
-    "test": "npm run tslint && jest"
+    "pub": "yarn tslint && yarn test && yarn build && yarn publish --access=public",
+    "test": "jest"
   },
   "peerDependencies": {
     "react": ">=16.0.0"
@@ -35,13 +35,13 @@
   "devDependencies": {
     "@poi/plugin-typescript": "^12.0.1",
     "@types/enzyme": "^3.1.15",
-    "@types/jest": "^24.0.9",
+    "@types/jest": "^24.0.11",
     "@types/react": "^16.7.11",
     "cz-conventional-changelog": "^2.1.0",
     "docz": "^0.13.7",
     "docz-theme-default": "^0.13.7",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.7.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.11.2",
     "enzyme-to-json": "^3.3.5",
     "jest": "^24.1.0",
     "poi": "^12.5.5",
