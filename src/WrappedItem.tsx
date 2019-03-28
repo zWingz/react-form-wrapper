@@ -22,65 +22,34 @@ function getValue(val: any, element: JSX.Element) {
   return ['input', 'textarea'].indexOf(type as string) !== -1 ? '' : val
 }
 
-const WrappedItem = React.memo<WrappedItemProp>(function(props) {
-  const { element, stateKey, wrapperProp = {}, val, onChange } = props
-  const wrappedOpt = Object.assign({}, wrapperProp)
-  const { valuePropName = 'value', eventTrigger = 'onChange' } = wrappedOpt
-  if (element.props[eventTrigger]) {
-    wrappedOpt.originOnChange = element.props[eventTrigger]
-  }
-  const valueProp = {
-    [valuePropName]: getValue(val, element)
-  }
-  const changeProp = {
-    [eventTrigger]: e => {
-      const { getValueFromEvent } = wrappedOpt
-      let value = ''
-      if (getValueFromEvent) {
-        value = getValueFromEvent(e)
-      } else if (e && e.target) {
-        value = e.target[wrappedOpt.valuePropName || 'value']
-      } else {
-        value = e
-      }
-      onChange(stateKey, value)
-      if (wrappedOpt.originOnChange) {
-        wrappedOpt.originOnChange(e)
+export default class WrappedItem extends React.PureComponent<WrappedItemProp> {
+  render() {
+    const { element, stateKey, wrapperProp = {}, val, onChange } = this.props
+    const wrappedOpt = Object.assign({}, wrapperProp)
+    const { valuePropName = 'value', eventTrigger = 'onChange' } = wrappedOpt
+    if (element.props[eventTrigger]) {
+      wrappedOpt.originOnChange = element.props[eventTrigger]
+    }
+    const valueProp = {
+      [valuePropName]: getValue(val, element)
+    }
+    const changeProp = {
+      [eventTrigger]: e => {
+        const { getValueFromEvent } = wrappedOpt
+        let value = ''
+        if (getValueFromEvent) {
+          value = getValueFromEvent(e)
+        } else if (e && e.target) {
+          value = e.target[wrappedOpt.valuePropName || 'value']
+        } else {
+          value = e
+        }
+        onChange(stateKey, value)
+        if (wrappedOpt.originOnChange) {
+          wrappedOpt.originOnChange(e)
+        }
       }
     }
+    return <element.type {...element.props} {...valueProp} {...changeProp} />
   }
-  return <element.type {...element.props} {...valueProp} {...changeProp} />
-})
-
-export default WrappedItem
-// export default class WrappedItem extends React.PureComponent<WrappedItemProp> {
-//   render() {
-//     const { element, stateKey, wrapperProp = {}, val, onChange } = this.props
-//     const wrappedOpt = Object.assign({}, wrapperProp)
-//     const { valuePropName = 'value', eventTrigger = 'onChange' } = wrappedOpt
-//     if (element.props[eventTrigger]) {
-//       wrappedOpt.originOnChange = element.props[eventTrigger]
-//     }
-//     const valueProp = {
-//       [valuePropName]: getValue(val, element)
-//     }
-//     const changeProp = {
-//       [eventTrigger]: e => {
-//         const { getValueFromEvent } = wrappedOpt
-//         let value = ''
-//         if (getValueFromEvent) {
-//           value = getValueFromEvent(e)
-//         } else if (e && e.target) {
-//           value = e.target[wrappedOpt.valuePropName || 'value']
-//         } else {
-//           value = e
-//         }
-//         onChange(stateKey, value)
-//         if (wrappedOpt.originOnChange) {
-//           wrappedOpt.originOnChange(e)
-//         }
-//       }
-//     }
-//     return <element.type {...element.props} {...valueProp} {...changeProp} />
-//   }
-// }
+}

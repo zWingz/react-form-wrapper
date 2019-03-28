@@ -1,6 +1,6 @@
 # React-form-wrapper
 
-[![CircleCI](https://circleci.com/gh/zWingz/react-form-wrapper/tree/master.svg?style=svg)](https://circleci.com/gh/zWingz/react-form-wrapper/tree/master)  [![codecov](https://codecov.io/gh/zWingz/react-form-wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/zWingz/react-form-wrapper)
+[![CircleCI](https://circleci.com/gh/zWingz/react-form-wrapper/tree/master.svg?style=svg)](https://circleci.com/gh/zWingz/react-form-wrapper/tree/master) [![codecov](https://codecov.io/gh/zWingz/react-form-wrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/zWingz/react-form-wrapper)
 
 [![Edit react-form-wrapper demo](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/53z1rm56zl?autoresize=1)
 
@@ -20,25 +20,25 @@ FormWrapperHoc(WrappedComponent, defaultState)
 `WrappedComponent` can get `formWrapper` from `this.props`
 
 ### FormWrapper props
-| name | type | desc |
-| ---- | ---- | ---- |
-| itemWrapper | (element: JSX.Element, opt: FormItemWrapperOpt) => JSX.Element | used to wrap component |
-| getState | () => state | used to getState from wrapper |
-| setWrapperState | (state, callback) => void | use dto setState like React.setState |
+
+| name            | type                                                           | desc                         |
+| --------------- | -------------------------------------------------------------- | ---------------------------- |
+| itemWrapper     | (element: JSX.Element, opt: FormItemWrapperOpt) => JSX.Element | wrap component               |
+| getState        | () => state                                                    | getState from wrapper        |
+| setWrapperState | (state, callback) => void                                      | setState like React.setState |
 
 ### FormItemWrapperOpt
 
-| name | type | desc | default |
-| ---- | ---- | ---- | ------- |
-| valuePropName | string | name for `value` prop | `value` |
-| getValueFromEvent | (e: any) => any | change event to value | (e) => e.target\[valuePropName\]
-| defaultValue | any | set defaultValue when `value` is `undefined` | `undefined` |
-| eventTrigger | string | listening for `value` changed | `onChange` |
+| name              | type            | desc                                              | default                          |
+| ----------------- | --------------- | ------------------------------------------------- | -------------------------------- |
+| valuePropName     | string          | name for wrapped's `value` prop, eg: `checked`    | `value`                          |
+| getValueFromEvent | (e: any) => any | change event to value                             | (e) => e.target\[valuePropName\] |
+| defaultValue      | any             | set defaultValue once when `value` is `undefined` | `undefined`                      |
+| eventTrigger      | string          | custom event trigger, eg: `onCheck`, `onChange`   | `onChange`                       |
 
-``` typescript
-
+```typescript
 import * as React from 'react'
-import FormWrapperHoc, {FormWrapperHocProp} from '@zzwing/react-form-wrapper'
+import FormWrapperHoc, { FormWrapperHocProp } from '@zzwing/react-form-wrapper'
 
 class Form extends React.PureComponent<FormWrapperHocProp> {
   render() {
@@ -46,15 +46,15 @@ class Form extends React.PureComponent<FormWrapperHocProp> {
     // use itemWrapper to wrap sub-comp
     const Input = itemWrapper('valueKey')(<input />)
     const value = getState().valueKey
-    return <>
-      {Input}
-      you can get value for {key}
-    </>
+    return (
+      <>
+        {Input}
+        you can get value for {key}
+      </>
+    )
   }
 }
 ```
-
-
 
 ## Types
 
