@@ -47,6 +47,7 @@ export default class Store<T extends PlainObject = PlainObject> {
     this.set = this.set.bind(this)
     this.get = this.get.bind(this)
   }
+
   public getState() {
     return Object.assign({}, this._selfState)
   }
@@ -61,28 +62,31 @@ export default class Store<T extends PlainObject = PlainObject> {
     this._chain = chain
   }
   public set(path: string, value: any) {
-    let tmp = this._selfState
-    let result
+    const { _chain, _selfState } = this
+    let tmp = _selfState
     if (path.indexOf('.') !== -1) {
       const keyPath = path.split('.')
-      const deepMax = keyPath.length - 1
-      keyPath.forEach((each, index) => {
-        if (index === deepMax) {
-          tmp[each] = value
-          result = value
-        } else {
-          if (typeof tmp[each] === 'undefined') {
-            tmp[each] = {}
+      if(path in _chain) {
+        const parentKey = keyPath.slice(0, -1).join('.')
+        _chain[parentKey][keyPath.pop()] = value
+      } else {
+        const deepMax = keyPath.length - 1
+        keyPath.forEach((each, index) => {
+          if (index === deepMax) {
+            tmp[each] = value
+          } else {
+            if (typeof tmp[each] === 'undefined') {
+              tmp[each] = {}
+            }
+            _chain[keyPath.slice(0, index + 1).join('.')] = tmp[each]
+            tmp = tmp[each]
           }
-          this._chain[keyPath.slice(0, index + 1).join('.')] = tmp[each]
-          tmp = tmp[each]
-        }
-      })
+        })
+      }
     } else {
       tmp[path] = value
-      result = value
     }
-    this._chain[path] = result
+    _chain[path] = value
   }
 
   public get(path: string, defaultValue?) {
